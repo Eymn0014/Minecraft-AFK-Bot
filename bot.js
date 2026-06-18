@@ -1,5 +1,6 @@
 const mineflayer = require('mineflayer');
 const config = require('./config.json');
+const http = require('http'); // HTTP sunucusu için
 
 const bot = mineflayer.createBot({
   host: config.serverHost,
@@ -14,6 +15,18 @@ let movementPhase = 0;
 const STEP_INTERVAL = 1500;
 const STEP_SPEED    = 1;
 const JUMP_DURATION = 500;
+
+// ----- WEB SUNUCUSU -----
+const PORT = 3000; // İstersen config.json'dan oku
+const server = http.createServer((req, res) => {
+  res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+  res.end('afk bot aktif lan dümbük');
+});
+
+server.listen(PORT, '0.0.0.0', () => {
+  console.log(`🌐 Web sunucusu çalışıyor: http://0.0.0.0:${PORT}`);
+});
+// -------------------------
 
 bot.on('spawn', () => {
   setTimeout(() => {
